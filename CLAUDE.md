@@ -36,7 +36,7 @@
 | Client State | [Zustand] |
 | Validation | [Zod] |
 | Forms | [React Hook Form] |
-| Auth | [Privy / NextAuth / ...] |
+| Auth | [NextAuth / ...] |
 | Notifications | [Sonner] |
 | HTTP Client | [shared/services/api.ts — custom fetch wrapper] |
 
