@@ -1,9 +1,0 @@
-{
-  "permissions": {
-    "allow": [
-      "Read(//d/Tutorial/Template//**)",
-      "Read(//d/Tutorial//**)",
-      "Bash(find /d/Tutorial/Template/react-feature-claude -name *)"
-    ]
-  }
-}
