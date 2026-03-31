@@ -19,7 +19,9 @@ description: Use when implementing error boundaries, catch blocks, toast notific
 
 ```ts
 // shared/lib/logger.ts
-const isProd = process.env.NODE_ENV === 'production'
+import { env } from '@/config/env'
+
+const isProd = env.NODE_ENV === 'production'
 
 export const logger = {
   // Debug only — hidden in production

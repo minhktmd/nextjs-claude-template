@@ -201,4 +201,4 @@ const schema = z.object({
 
 - Schema + derived type → `features/<feature>/types/<resource>.type.ts` (co-located with other types)
 - Form component → `features/<feature>/components/<Resource>Form.tsx`
-- If schema has 3+ objects → extract to `features/<feature>/schemas/<resource>.schema.ts`
+- If a feature has 3+ schemas → extract to `features/<feature>/schemas/<resource>.schema.ts`
