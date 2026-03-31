@@ -9,10 +9,16 @@ export const apiClient = axios.create({
 })
 
 // Request interceptor — inject auth token
+// Token is registered externally via registerTokenGetter() to keep shared/ dependency-free
+let getToken: (() => string | null) | null = null
+
+export function registerTokenGetter(getter: () => string | null) {
+  getToken = getter
+}
+
 apiClient.interceptors.request.use((config) => {
-  // TODO: inject auth token when auth is set up
-  // const token = getToken()
-  // if (token) config.headers.Authorization = `Bearer ${token}`
+  const token = getToken?.()
+  if (token) config.headers.Authorization = `Bearer ${token}`
   return config
 })
 
