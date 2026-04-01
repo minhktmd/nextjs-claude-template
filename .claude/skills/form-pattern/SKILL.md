@@ -145,8 +145,8 @@ export function <Resource>Form({ initial }: <Resource>FormProps) {
 Use `Controller` when `register` is not enough: shadcn Select, Checkbox, DatePicker, custom inputs.
 
 ```tsx
-import { Controller } from 'react-hook-form'
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/shared/components/ui/select'
+import { Controller } from 'react-hook-form';
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/shared/components/ui/select';
 
 // Inside the form component:
 <Controller
@@ -163,38 +163,40 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@
       </SelectContent>
     </Select>
   )}
-/>
-{form.formState.errors.status && (
-  <p className="text-sm text-destructive">{form.formState.errors.status.message}</p>
-)}
+/>;
+{
+  form.formState.errors.status && <p className="text-destructive text-sm">{form.formState.errors.status.message}</p>;
+}
 ```
 
 ## Common Zod patterns
 
 ```ts
-const schema = z.object({
-  // Required string
-  name: z.string().min(1, 'Name is required'),
+const schema = z
+  .object({
+    // Required string
+    name: z.string().min(1, 'Name is required'),
 
-  // Optional string
-  description: z.string().optional(),
+    // Optional string
+    description: z.string().optional(),
 
-  // Email
-  email: z.string().email('Invalid email address'),
+    // Email
+    email: z.string().email('Invalid email address'),
 
-  // Number from input (inputs return strings — coerce)
-  amount: z.coerce.number().positive('Must be positive'),
+    // Number from input (inputs return strings — coerce)
+    amount: z.coerce.number().positive('Must be positive'),
 
-  // Enum from const map
-  status: z.enum(['active', 'inactive']),
+    // Enum from const map
+    status: z.enum(['active', 'inactive']),
 
-  // Confirmed password
-  password: z.string().min(8, 'At least 8 characters'),
-  confirmPassword: z.string(),
-}).refine(
-  (data) => data.password === data.confirmPassword,
-  { message: 'Passwords do not match', path: ['confirmPassword'] }
-)
+    // Confirmed password
+    password: z.string().min(8, 'At least 8 characters'),
+    confirmPassword: z.string(),
+  })
+  .refine((data) => data.password === data.confirmPassword, {
+    message: 'Passwords do not match',
+    path: ['confirmPassword'],
+  });
 ```
 
 ## Where to place

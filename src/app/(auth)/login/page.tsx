@@ -1,4 +1,4 @@
-import { LoginForm } from '@/features/auth'
+import { LoginForm } from '@/features/auth';
 
 export default function LoginPage() {
   return (
@@ -8,5 +8,5 @@ export default function LoginPage() {
         <LoginForm />
       </div>
     </main>
-  )
+  );
 }

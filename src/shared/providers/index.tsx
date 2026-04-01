@@ -1,5 +1,6 @@
-import { Toaster } from 'sonner'
-import { QueryProvider } from './query-provider'
+import { Toaster } from 'sonner';
+
+import { QueryProvider } from './query-provider';
 
 export function Providers({ children }: { children: React.ReactNode }) {
   return (
@@ -7,5 +8,5 @@ export function Providers({ children }: { children: React.ReactNode }) {
       {children}
       <Toaster richColors position="top-right" />
     </QueryProvider>
-  )
+  );
 }

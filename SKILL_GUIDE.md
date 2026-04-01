@@ -8,14 +8,14 @@ Run these commands once after cloning the template to install community skills t
 
 These skills are committed to `skills/` and available immediately — no installation needed.
 
-| Skill | When to use |
-|-------|-------------|
-| `const-map-pattern` | Creating a const map, derived type, or options array |
-| `context-pattern` | Creating a new React Context |
-| `service-pattern` | Creating a service function, query hook, or mutation |
-| `zustand-pattern` | Creating a Zustand store |
-| `form-pattern` | Creating a form with React Hook Form + Zod |
-| `error-handling` | Implementing error boundaries, toast notifications, or logger |
+| Skill               | When to use                                                   |
+| ------------------- | ------------------------------------------------------------- |
+| `const-map-pattern` | Creating a const map, derived type, or options array          |
+| `context-pattern`   | Creating a new React Context                                  |
+| `service-pattern`   | Creating a service function, query hook, or mutation          |
+| `zustand-pattern`   | Creating a Zustand store                                      |
+| `form-pattern`      | Creating a form with React Hook Form + Zod                    |
+| `error-handling`    | Implementing error boundaries, toast notifications, or logger |
 
 ---
 
@@ -28,7 +28,7 @@ npx skills add vercel-labs/agent-skills --skill vercel-react-best-practices -a c
 # React composition patterns (recommended)
 npx skills add vercel-labs/agent-skills --skill vercel-composition-patterns -a claude-code
 
-# Next.js 15+ conventions (recommended)
+# Next.js 16+ conventions (recommended)
 npx skills add vercel-labs/next-skills --skill next-best-practices -a claude-code
 ```
 

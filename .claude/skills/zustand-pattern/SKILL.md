@@ -46,38 +46,38 @@ export const use<Resource>Store = create<<Resource>State>(set => ({
 
 ```ts
 // features/cart/stores/cart.store.ts
-import { create } from 'zustand'
+import { create } from 'zustand';
 
 interface CartState {
-  items: CartItem[]
-  addItem: (item: CartItem) => void
-  removeItem: (id: string) => void
-  reset: () => void
+  items: CartItem[];
+  addItem: (item: CartItem) => void;
+  removeItem: (id: string) => void;
+  reset: () => void;
 }
 
-const initialState = { items: [] as CartItem[] }
+const initialState = { items: [] as CartItem[] };
 
-export const useCartStore = create<CartState>(set => ({
+export const useCartStore = create<CartState>((set) => ({
   ...initialState,
-  addItem: item => set(state => ({ items: [...state.items, item] })),
-  removeItem: id => set(state => ({ items: state.items.filter(i => i.id !== id) })),
+  addItem: (item) => set((state) => ({ items: [...state.items, item] })),
+  removeItem: (id) => set((state) => ({ items: state.items.filter((i) => i.id !== id) })),
   reset: () => set(initialState),
-}))
+}));
 ```
 
 ## With persist middleware (only when needed)
 
 ```ts
-import { create } from 'zustand'
-import { persist } from 'zustand/middleware'
+import { create } from 'zustand';
+import { persist } from 'zustand/middleware';
 
 export const useSettingsStore = create<SettingsState>()(
   persist(
-    set => ({
+    (set) => ({
       ...initialState,
       // actions
     }),
-    { name: 'settings-store' },
-  ),
-)
+    { name: 'settings-store' }
+  )
+);
 ```

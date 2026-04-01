@@ -1,10 +1,10 @@
-import { Label } from '@/shared/components/atoms/label'
-import { Input } from '@/shared/components/atoms/input'
+import { Input } from '@/shared/components/atoms/input';
+import { Label } from '@/shared/components/atoms/label';
 
 type FormFieldProps = React.InputHTMLAttributes<HTMLInputElement> & {
-  label: string
-  error?: string
-}
+  label: string;
+  error?: string;
+};
 
 export function FormField({ label, error, id, ...inputProps }: FormFieldProps) {
   return (
@@ -17,5 +17,5 @@ export function FormField({ label, error, id, ...inputProps }: FormFieldProps) {
         </p>
       )}
     </div>
-  )
+  );
 }

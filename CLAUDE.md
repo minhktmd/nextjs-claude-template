@@ -26,19 +26,19 @@
 
 <!-- List technologies concisely by concern. No rationale here — put that in docs/ARCHITECTURE.md. -->
 
-| Concern | Technology |
-|---------|-----------|
-| Framework | [Next.js 15 / App Router] |
-| Language | [TypeScript 5.x] |
-| Styling | [Tailwind CSS v4] |
-| UI Components | [shadcn/ui] |
-| Server State | [TanStack Query v5] |
-| Client State | [Zustand] |
-| Validation | [Zod] |
-| Forms | [React Hook Form] |
-| Auth | [NextAuth / ...] |
-| Notifications | [Sonner] |
-| HTTP Client | [shared/services/api.ts — custom fetch wrapper] |
+| Concern       | Technology                                      |
+| ------------- | ----------------------------------------------- |
+| Framework     | [Next.js 15 / App Router]                       |
+| Language      | [TypeScript 5.x]                                |
+| Styling       | [Tailwind CSS v4]                               |
+| UI Components | [shadcn/ui]                                     |
+| Server State  | [TanStack Query v5]                             |
+| Client State  | [Zustand]                                       |
+| Validation    | [Zod]                                           |
+| Forms         | [React Hook Form]                               |
+| Auth          | [NextAuth / ...]                                |
+| Notifications | [Sonner]                                        |
+| HTTP Client   | [shared/services/api.ts — custom fetch wrapper] |
 
 ---
 
@@ -171,6 +171,7 @@ app/ → features/ → domains/ → shared/
      If violations occur, prompt: "Re-read CLAUDE.md Do NOT section. Fix violations." -->
 
 **Architecture:**
+
 - ❌ Import internals from another feature — use `index.ts` only
 - ❌ Put business logic in `src/app/` pages
 - ❌ Let features import from each other outside of `index.ts`
@@ -179,6 +180,7 @@ app/ → features/ → domains/ → shared/
 - ❌ Create barrel exports at the `shared/` root
 
 **Components:**
+
 - ❌ Apply Atomic Design inside `features/` or `domains/` (flat components only)
 - ❌ Let atoms import molecules, or molecules import organisms (respect atomic hierarchy)
 - ❌ Put business logic inside shared components
@@ -187,18 +189,22 @@ app/ → features/ → domains/ → shared/
 - ❌ Direct DOM manipulation (`document.querySelector`...) — use `ref` instead
 
 **TypeScript:**
+
 - ❌ Use `any` — use `unknown` + type guards
 - ❌ Use `Promise<any>` as a service return type — use `Promise<void>` or a typed interface
 - ❌ Use TypeScript `enum` — use `as const` + derived type + options array instead (use skill `const-map-pattern`)
+- ❌ Use type assertion (`as SomeType`) to silence TypeScript — fix the type instead; only acceptable when narrowing from `unknown` after validation
 - ❌ Access `process.env` directly — use `config/env.ts`
 - ❌ Ignore error types from API responses
 
 **Services & Data:**
+
 - ❌ Use `fetch` or `axios` directly — always use the base service from `shared/services/api.ts`
 - ❌ Write inline query key arrays — always use the factory in `shared/constants/query-keys.ts`
 - ❌ Skip Zod validation on API responses — always use `.safeParse()` and check `result.success` before using `result.data`
 
 **Patterns:**
+
 - ❌ Fetch data directly inside components — use hooks or TanStack Query
 - ❌ Add files to `shared/` for logic that is only used by one feature
 - ❌ Edit files outside the scope of the current SPEC.md (unless there is a clear reason)
@@ -229,12 +235,12 @@ app/ → features/ → domains/ → shared/
 
 ### Code Style & Naming
 
-- **Prettier:** no semicolons, single quotes, 2-space indent, 120 print width, `es5` trailing commas
+- **Prettier:** semicolons, single quotes, 2-space indent, 120 print width, `es5` trailing commas
 <!-- function declarations over arrow functions: enables hoisting (helpers can be defined after component), produces clearer TypeScript error messages -->
 - **Components:** function declarations (`export function Foo()`)
 - **Callbacks & handlers:** arrow functions (`const handleClick = () => {}`)
 - **`"use client"`:** required at the top of any file using hooks, events, or browser APIs
-- **Exports:** named exports everywhere — default exports only when required by the framework (e.g. Next.js pages, layouts)
+- **Exports:** named exports everywhere — default exports only for Next.js file conventions (`page.tsx`, `layout.tsx`, `loading.tsx`, `error.tsx`, `not-found.tsx`, `route.ts`)
 - **Barrel files:** re-export via `index.ts` using named exports only
 - **Path alias:** `@/*` → `src/*` — never use relative paths across feature boundaries
 - **Import order:** external packages → internal `@/` → relative → type imports
@@ -242,34 +248,35 @@ app/ → features/ → domains/ → shared/
 - **No magic numbers:** extract to named constants in `shared/constants/` or feature `constants/`
 - **No inline styles:** Tailwind classes only — no `style={{}}` unless absolutely unavoidable
 - **No unused imports:** enforced by ESLint
-- **Types:** use `unknown` + type guards instead of `any`; prefer `type` over `interface` unless extension is needed
+- **Types:** use `unknown` + type guards instead of `any`; prefer `type` over `interface` — use `interface` only when declaration merging is explicitly needed (e.g. augmenting third-party library types)
 - **Env vars:** always via `config/env.ts` — never `process.env` directly
 - **Export types** from a feature via `index.ts` alongside components
 
 **Naming conventions:**
 
-| Type | Convention | Example |
-|------|-----------|---------|
-| Files & folders | kebab-case | `login-form.tsx`, `use-auth.ts` |
-| Components | PascalCase named export | `export function LoginForm()` |
-| Hooks | camelCase, `use` prefix | `export function useAuth()` |
-| Types/Interfaces | PascalCase | `AuthResponse`, `LoginPayload` |
-| Zustand stores | camelCase, `use` prefix | `export const useAuthStore = create(...)` |
-| Service functions | camelCase, verb-first | `getVaults()`, `createVault()` |
-| Zod schemas | camelCase, `Schema` suffix | `loginPayloadSchema` |
+| Type              | Convention                         | Example                                          |
+| ----------------- | ---------------------------------- | ------------------------------------------------ |
+| Files & folders   | kebab-case                         | `login-form.tsx`, `use-auth.ts`                  |
+| Components        | kebab-case file, PascalCase export | `login-form.tsx` → `export function LoginForm()` |
+| Hooks             | camelCase, `use` prefix            | `export function useAuth()`                      |
+| Types/Interfaces  | PascalCase                         | `AuthResponse`, `LoginPayload`                   |
+| Zustand stores    | camelCase, `use` prefix            | `export const useAuthStore = create(...)`        |
+| Service functions | camelCase, verb-first              | `getVaults()`, `createVault()`                   |
+| Zod schemas       | camelCase, `Schema` suffix         | `loginPayloadSchema`                             |
 
 **File naming by folder:**
 
-| Folder | Pattern | Example |
-|--------|---------|---------|
-| `services/` | `[resource].service.ts` | `vault.service.ts`, `user.service.ts` |
-| `types/` | `[resource].type.ts` | `vault.type.ts`, `user.type.ts` |
-| `hooks/` | `use[Action][Resource].ts` | `useGetVaults.ts`, `useCreateVault.ts` |
-| `components/` | `[Feature][Role].tsx` | `VaultCard.tsx`, `UserTable.tsx` |
-| `stores/` | `[resource].store.ts` | `vault.store.ts`, `user.store.ts` |
-| `<feature>-context.tsx` | `[Resource]Context.tsx` | `VaultContext.tsx`, `AuthContext.tsx` |
+| Folder                  | Pattern                      | Example                                    |
+| ----------------------- | ---------------------------- | ------------------------------------------ |
+| `services/`             | `[resource].service.ts`      | `vault.service.ts`, `user.service.ts`      |
+| `types/`                | `[resource].type.ts`         | `vault.type.ts`, `user.type.ts`            |
+| `hooks/`                | `use-[action]-[resource].ts` | `use-get-vaults.ts`, `use-create-vault.ts` |
+| `components/`           | `[feature]-[role].tsx`       | `vault-card.tsx`, `user-table.tsx`         |
+| `stores/`               | `[resource].store.ts`        | `vault.store.ts`, `user.store.ts`          |
+| `<feature>-context.tsx` | `[resource]-context.tsx`     | `vault-context.tsx`, `auth-context.tsx`    |
 
 **Schemas vs Types:**
+
 - `types/` owns interfaces and types **not** derived from Zod (API response shapes, prop types, union types)
 - Zod schemas: define in `types/[resource].type.ts`, co-located with the derived `z.infer` type
 - If a feature has 3+ schemas: extract to a dedicated `schemas/` folder with `[resource].schema.ts` naming
@@ -311,6 +318,7 @@ Dependency direction: `templates → organisms → molecules → atoms` (never r
 - Use `cn()` from `@/shared/lib/cn` to merge Tailwind classes — never string concatenation
 
 **Context pattern** — always co-locate context object, provider, and consumer hook in one file:
+
 - Always initialize context with `null`, never with `{} as T` or a fake default value
 - Always throw a descriptive error in the consumer hook when context is `null`
 - Never call `useContext` directly outside of the dedicated consumer hook
@@ -324,6 +332,7 @@ Dependency direction: `templates → organisms → molecules → atoms` (never r
 - Form state → React Hook Form + Zod resolver
 
 **Zustand store rules:**
+
 - Always named export (`export const use...`) — no default exports
 <!-- extracting initialState ensures reset() always returns to the exact same state without duplicating values -->
 - Extract `initialState` as a const — makes `reset()` reliable and DRY
@@ -358,9 +367,9 @@ Dependency direction: `templates → organisms → molecules → atoms` (never r
 - **Submit errors:** (e.g. API error after submit) displayed via toast, not injected into form state
 
 ```ts
-const schema = z.object({ email: z.string().email() })
-type FormValues = z.infer<typeof schema>
-const form = useForm<FormValues>({ resolver: zodResolver(schema) })
+const schema = z.object({ email: z.string().email() });
+type FormValues = z.infer<typeof schema>;
+const form = useForm<FormValues>({ resolver: zodResolver(schema) });
 ```
 
 ### Error Handling & Logging
@@ -370,6 +379,7 @@ const form = useForm<FormValues>({ resolver: zodResolver(schema) })
 - In `catch` blocks: always use `logger.error` — never silently swallow errors
 
 **Logger** (`shared/lib/logger.ts`):
+
 - `logger.log` — debug only, hidden in production
 - `logger.warn` — always visible
 - `logger.error` — always visible
@@ -385,18 +395,19 @@ If `logger.ts` does not exist yet: fall back to `console.warn` / `console.error`
 
 Format: `<type>(<scope>): <description>`
 
-| Type | When to use |
-|------|------------|
-| `feat` | New feature |
-| `fix` | Bug fix |
+| Type       | When to use                                  |
+| ---------- | -------------------------------------------- |
+| `feat`     | New feature                                  |
+| `fix`      | Bug fix                                      |
 | `refactor` | Code change that is not a feature or bug fix |
-| `chore` | Maintenance — deps, config, tooling |
-| `docs` | Documentation only |
-| `style` | Formatting, no logic change |
-| `test` | Adding or updating tests |
-| `perf` | Performance improvement |
+| `chore`    | Maintenance — deps, config, tooling          |
+| `docs`     | Documentation only                           |
+| `style`    | Formatting, no logic change                  |
+| `test`     | Adding or updating tests                     |
+| `perf`     | Performance improvement                      |
 
 **Rules:**
+
 - `scope`: optional, kebab-case feature or module name (`auth`, `deposit`, `farm`)
 - `description`: imperative mood, lowercase, no trailing period ("add" not "added")
 - Breaking change: append `!` after type — `feat!: migrate to new auth flow`
@@ -414,11 +425,11 @@ chore: update shadcn/ui to v2.1
 
 <!-- Full overview → docs/OVERVIEW.md. Update this table whenever a feature is added. -->
 
-| # | Feature | Route | Domain | Status |
-|---|---------|-------|--------|--------|
-| 1 | [Feature A] | `/route-a` | [domain] | Planned |
-| 2 | [Feature B] | `/route-b` | [domain] | In Progress |
-| 3 | [Feature C] | `/route-c` | — | Done |
+| #   | Feature     | Route      | Domain   | Status      |
+| --- | ----------- | ---------- | -------- | ----------- |
+| 1   | [Feature A] | `/route-a` | [domain] | Planned     |
+| 2   | [Feature B] | `/route-b` | [domain] | In Progress |
+| 3   | [Feature C] | `/route-c` | —        | Done        |
 
 ---
 
@@ -428,14 +439,14 @@ Skills are best-practice playbooks Claude Code loads on demand — not read ever
 
 ### Project skills (available in `.claude/skills/`)
 
-| Skill | Use when |
-|-------|---------|
+| Skill               | Use when                                             |
+| ------------------- | ---------------------------------------------------- |
 | `const-map-pattern` | Creating a const map, derived type, or options array |
-| `context-pattern` | Creating a new React Context |
-| `service-pattern` | Creating a service function, query hook, or mutation |
-| `zustand-pattern` | Creating a Zustand store |
-| `form-pattern` | Creating a form with React Hook Form + Zod |
-| `error-handling` | Implementing error boundary, toast, or logger |
+| `context-pattern`   | Creating a new React Context                         |
+| `service-pattern`   | Creating a service function, query hook, or mutation |
+| `zustand-pattern`   | Creating a Zustand store                             |
+| `form-pattern`      | Creating a form with React Hook Form + Zod           |
+| `error-handling`    | Implementing error boundary, toast, or logger        |
 
 <!-- form-pattern and error-handling skills are pending creation — see docs/SKILLS.md -->
 
@@ -443,15 +454,16 @@ Skills are best-practice playbooks Claude Code loads on demand — not read ever
 
 <!-- Installation instructions → docs/SKILLS.md -->
 
-| Skill | Use when |
-|-------|---------|
-| `vercel-react-best-practices` | Writing components, data fetching, optimization |
-| `vercel-composition-patterns` | Designing shared components |
-| `next-best-practices` | Next.js file conventions, RSC boundaries, async APIs, metadata, image/font, bundling |
+| Skill                         | Use when                                                                             |
+| ----------------------------- | ------------------------------------------------------------------------------------ |
+| `vercel-react-best-practices` | Writing components, data fetching, optimization                                      |
+| `vercel-composition-patterns` | Designing shared components                                                          |
+| `next-best-practices`         | Next.js file conventions, RSC boundaries, async APIs, metadata, image/font, bundling |
 
 ### Note on barrel imports
 
 `vercel-react-best-practices` includes a rule against barrel imports. In this template:
+
 - `features/*/index.ts` and `domains/*/index.ts` are **public API boundaries** — not barrel anti-patterns
 - Anti-patterns to avoid: re-exporting everything from `shared/` root, or importing directly from icon/component library index files
 

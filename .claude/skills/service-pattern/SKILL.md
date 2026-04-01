@@ -26,29 +26,29 @@ description: Use when creating a new service function, TanStack Query hook, or m
 
 ```ts
 // shared/services/api.ts
-import axios from 'axios'
-import { env } from '@/config/env'
+import axios from 'axios';
+import { env } from '@/config/env';
 
 export const apiClient = axios.create({
   baseURL: env.API_BASE_URL,
   headers: { 'Content-Type': 'application/json' },
-})
+});
 
 // Inject auth token
-apiClient.interceptors.request.use(config => {
-  const token = getToken() // replace with your auth token getter
-  if (token) config.headers.Authorization = `Bearer ${token}`
-  return config
-})
+apiClient.interceptors.request.use((config) => {
+  const token = getToken(); // replace with your auth token getter
+  if (token) config.headers.Authorization = `Bearer ${token}`;
+  return config;
+});
 
 // Unwrap res.data + normalize errors
 apiClient.interceptors.response.use(
-  res => res.data,
-  err => {
-    const message = err.response?.data?.message ?? err.message
-    return Promise.reject(new Error(message))
-  },
-)
+  (res) => res.data,
+  (err) => {
+    const message = err.response?.data?.message ?? err.message;
+    return Promise.reject(new Error(message));
+  }
+);
 ```
 
 ---

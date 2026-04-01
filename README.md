@@ -1,6 +1,6 @@
 # Next.js Production Template
 
-A production-ready **Next.js 15+ (App Router)** project template designed for mid-size applications (10–20 screens). Built around **Feature-Oriented Architecture** and **Atomic Design**, and optimized for **Claude Code** workflows — where the human writes `.md` specs and the AI builds the code.
+A production-ready **Next.js 16+ (App Router)** project template designed for mid-size applications (10–20 screens). Built around **Feature-Oriented Architecture** and **Atomic Design**, and optimized for **Claude Code** workflows — where the human writes `.md` specs and the AI builds the code.
 
 ---
 
@@ -13,11 +13,13 @@ This is more than a blank project. It ships with two layers:
 2. **Template code** — pre-wired boilerplate so you don't start from zero: the base HTTP client, environment config, logger, global providers, and more. Additional templates (example features, skeleton layouts, skill files for Claude Code) may be included depending on the variant — see [What's Included](#whats-included) below.
 
 **Use this template when:**
+
 - You are starting a mid-size Next.js project (10–20 features/screens)
 - You want consistent architecture enforced from day one
 - You are using Claude Code (or another AI coding assistant) to implement features from specs
 
 **Do not use this template for:**
+
 - Simple single-page tools or landing pages (too much structure)
 - Projects that don't use the listed tech stack (conventions are stack-specific)
 
@@ -25,19 +27,19 @@ This is more than a blank project. It ships with two layers:
 
 ## Tech Stack
 
-| Concern | Technology |
-|---------|-----------|
-| Framework | Next.js ≥ 15 / App Router |
-| Language | TypeScript 5.x |
-| Styling | Tailwind CSS v4 |
-| UI Components | shadcn/ui |
-| Server State | TanStack Query v5 |
-| Client State | Zustand |
-| Validation | Zod v4 |
-| Forms | React Hook Form v7 + `@hookform/resolvers` v5 |
-| Notifications | Sonner |
-| HTTP Client | Custom Axios wrapper (`shared/services/api.ts`) |
-| Package Manager | pnpm |
+| Concern         | Technology                                      |
+| --------------- | ----------------------------------------------- |
+| Framework       | Next.js ≥ 16 / App Router                       |
+| Language        | TypeScript 5.x                                  |
+| Styling         | Tailwind CSS v4                                 |
+| UI Components   | shadcn/ui                                       |
+| Server State    | TanStack Query v5                               |
+| Client State    | Zustand                                         |
+| Validation      | Zod v4                                          |
+| Forms           | React Hook Form v7 + `@hookform/resolvers` v5   |
+| Notifications   | Sonner                                          |
+| HTTP Client     | Custom Axios wrapper (`shared/services/api.ts`) |
+| Package Manager | pnpm                                            |
 
 ---
 
@@ -45,30 +47,30 @@ This is more than a blank project. It ships with two layers:
 
 ### Always included
 
-| Item | Location | Description |
-|------|----------|-------------|
-| Architecture conventions | `CLAUDE.md` | Full coding conventions, dependency rules, naming patterns |
-| Doc templates | `docs/` | `BRIEF.md`, `OVERVIEW.md`, `domains/` — ready to fill in |
-| Feature SPEC template | `src/features/_template/SPEC.md` | Copy this when starting a new feature |
-| Base HTTP client | `src/shared/services/api.ts` | Axios instance with auth interceptor and error normalization |
-| Env config | `src/config/env.ts` | Typed, validated environment variables (throws on boot if missing) |
-| Route constants | `src/config/routes.ts` | Centralized route strings |
-| Logger | `src/shared/lib/logger.ts` | `log / warn / error` — silent in production for `log` |
-| Global providers | `src/shared/providers/` | TanStack Query, Sonner, theme — composed and wired to `app/layout.tsx` |
-| Query key factory | `src/shared/constants/query-keys.ts` | Centralized TanStack Query key management |
-| Claude Code skills | `.claude/skills/` | Skill playbooks: `zustand-pattern`, `service-pattern`, `context-pattern`, etc. |
+| Item                     | Location                             | Description                                                                    |
+| ------------------------ | ------------------------------------ | ------------------------------------------------------------------------------ |
+| Architecture conventions | `CLAUDE.md`                          | Full coding conventions, dependency rules, naming patterns                     |
+| Doc templates            | `docs/`                              | `BRIEF.md`, `OVERVIEW.md`, `domains/` — ready to fill in                       |
+| Feature SPEC template    | `src/features/_template/SPEC.md`     | Copy this when starting a new feature                                          |
+| Base HTTP client         | `src/shared/services/api.ts`         | Axios instance with auth interceptor and error normalization                   |
+| Env config               | `src/config/env.ts`                  | Typed, validated environment variables (throws on boot if missing)             |
+| Route constants          | `src/config/routes.ts`               | Centralized route strings                                                      |
+| Logger                   | `src/shared/lib/logger.ts`           | `log / warn / error` — silent in production for `log`                          |
+| Global providers         | `src/shared/providers/`              | TanStack Query, Sonner, theme — composed and wired to `app/layout.tsx`         |
+| Query key factory        | `src/shared/constants/query-keys.ts` | Centralized TanStack Query key management                                      |
+| Claude Code skills       | `.claude/skills/`                    | Skill playbooks: `zustand-pattern`, `service-pattern`, `context-pattern`, etc. |
 
 ### Reference implementation (example domain + features)
 
 The template ships with a **working example** you can read, run, and delete when you no longer need it. It demonstrates every layer of the architecture end-to-end — from domain types down to UI components.
 
-| Item | Location | Description |
-|------|----------|-------------|
-| Finance domain | `src/domains/finance/` | Shared types, services, and hooks for financial operations |
-| Deposit feature | `src/features/deposit/` | Complete feature: types → service → store → hooks → components → `index.ts` |
-| Withdraw feature | `src/features/withdraw/` | Same structure as Deposit — shows how two features share a domain |
-| Feature SPECs | `src/features/deposit/SPEC.md`, `src/features/withdraw/SPEC.md` | Example of a fully written spec — use as a model for your own |
-| Domain doc | `docs/domains/finance.md` | Example domain documentation |
+| Item             | Location                                                        | Description                                                                 |
+| ---------------- | --------------------------------------------------------------- | --------------------------------------------------------------------------- |
+| Finance domain   | `src/domains/finance/`                                          | Shared types, services, and hooks for financial operations                  |
+| Deposit feature  | `src/features/deposit/`                                         | Complete feature: types → service → store → hooks → components → `index.ts` |
+| Withdraw feature | `src/features/withdraw/`                                        | Same structure as Deposit — shows how two features share a domain           |
+| Feature SPECs    | `src/features/deposit/SPEC.md`, `src/features/withdraw/SPEC.md` | Example of a fully written spec — use as a model for your own               |
+| Domain doc       | `docs/domains/finance.md`                                       | Example domain documentation                                                |
 
 > **These are reference files, not production code.** Delete `src/domains/finance/`, `src/features/deposit/`, `src/features/withdraw/`, and their corresponding doc files once you have written your own domain and first feature.
 
@@ -183,14 +185,14 @@ Also remove their routes from `src/app/` if any were wired up.
 
 ### Step 3 — Update the project metadata
 
-| File | What to update |
-|------|---------------|
-| `CLAUDE.md` | Project name, description, feature map, tech stack (remove template notes block at top) |
-| `docs/BRIEF.md` | Raw product requirements in natural language |
-| `docs/OVERVIEW.md` | Structured domain model and feature map |
-| `src/config/env.ts` | Environment variable schema for your project |
-| `src/config/site.ts` | Site name, description, URLs |
-| `src/config/routes.ts` | Route constants |
+| File                   | What to update                                                                          |
+| ---------------------- | --------------------------------------------------------------------------------------- |
+| `CLAUDE.md`            | Project name, description, feature map, tech stack (remove template notes block at top) |
+| `docs/BRIEF.md`        | Raw product requirements in natural language                                            |
+| `docs/OVERVIEW.md`     | Structured domain model and feature map                                                 |
+| `src/config/env.ts`    | Environment variable schema for your project                                            |
+| `src/config/site.ts`   | Site name, description, URLs                                                            |
+| `src/config/routes.ts` | Route constants                                                                         |
 
 ---
 

@@ -30,24 +30,24 @@ export const <resource><Concept>Options = [
 
 ```ts
 // 1. Const map
-export const USER_ROLE = { ADMIN: 'ADMIN', VIEWER: 'VIEWER' } as const
+export const USER_ROLE = { ADMIN: 'ADMIN', VIEWER: 'VIEWER' } as const;
 
 // 2. Derived type
-export type UserRole = (typeof USER_ROLE)[keyof typeof USER_ROLE]
+export type UserRole = (typeof USER_ROLE)[keyof typeof USER_ROLE];
 
 // 3. Options array for UI
 export const userRoleOptions = [
   { label: 'Admin', value: USER_ROLE.ADMIN },
   { label: 'Viewer', value: USER_ROLE.VIEWER },
-] as const
+] as const;
 ```
 
 ## Naming rules
 
-| Piece | Convention | Example |
-|-------|-----------|---------|
-| Const map | `SCREAMING_SNAKE_CASE` | `USER_ROLE`, `TRANSACTION_STATUS` |
-| Derived type | `PascalCase` | `UserRole`, `TransactionStatus` |
+| Piece         | Convention                    | Example                                       |
+| ------------- | ----------------------------- | --------------------------------------------- |
+| Const map     | `SCREAMING_SNAKE_CASE`        | `USER_ROLE`, `TRANSACTION_STATUS`             |
+| Derived type  | `PascalCase`                  | `UserRole`, `TransactionStatus`               |
 | Options array | `camelCase`, `Options` suffix | `userRoleOptions`, `transactionStatusOptions` |
 
 ## Where to place

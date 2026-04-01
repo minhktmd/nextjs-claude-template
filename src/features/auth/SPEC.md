@@ -32,16 +32,22 @@ Handles user authentication — login and logout flows.
 ### POST `/auth/login`
 
 **Request:**
+
 ```json
 { "email": "user@example.com", "password": "secret123" }
 ```
 
 **Response 200:**
+
 ```json
-{ "accessToken": "eyJ...", "user": { "id": "...", "email": "...", "name": "...", "avatarUrl": null, "role": "member", "createdAt": "..." } }
+{
+  "accessToken": "eyJ...",
+  "user": { "id": "...", "email": "...", "name": "...", "avatarUrl": null, "role": "member", "createdAt": "..." }
+}
 ```
 
 **Response 401:**
+
 ```json
 { "message": "Invalid credentials" }
 ```

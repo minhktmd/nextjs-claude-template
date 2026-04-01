@@ -1,23 +1,25 @@
-'use client'
+'use client';
 
-import { useForm } from 'react-hook-form'
-import { zodResolver } from '@hookform/resolvers/zod'
-import { Button } from '@/shared/components/atoms/button'
-import { FormField } from '@/shared/components/molecules/form-field'
-import { loginPayloadSchema, type LoginPayload } from '../types/auth.type'
-import { useLogin } from '../hooks/useLogin'
+import { zodResolver } from '@hookform/resolvers/zod';
+import { useForm } from 'react-hook-form';
+
+import { Button } from '@/shared/components/atoms/button';
+import { FormField } from '@/shared/components/molecules/form-field';
+
+import { useLogin } from '../hooks/useLogin';
+import { loginPayloadSchema, type LoginPayload } from '../types/auth.type';
 
 export function LoginForm() {
-  const { mutate: login, isPending } = useLogin()
+  const { mutate: login, isPending } = useLogin();
 
   const form = useForm<LoginPayload>({
     resolver: zodResolver(loginPayloadSchema),
     defaultValues: { email: '', password: '' },
-  })
+  });
 
   const onSubmit = (values: LoginPayload) => {
-    login(values)
-  }
+    login(values);
+  };
 
   return (
     <form onSubmit={form.handleSubmit(onSubmit)} noValidate className="flex flex-col gap-4">
@@ -41,5 +43,5 @@ export function LoginForm() {
         {isPending ? 'Signing in…' : 'Sign in'}
       </Button>
     </form>
-  )
+  );
 }
